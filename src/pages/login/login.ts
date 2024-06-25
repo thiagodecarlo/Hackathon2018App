@@ -31,6 +31,8 @@ export class LoginPage {
       content:"Buscado",
       spinner:"ios"
     });
+   try{
+   
     load.present();
     let cpfs=this.cpf.replace(".","").replace(".","").replace("-","")
     this._firebase.login(cpfs, this.senha).subscribe(res => {
@@ -44,6 +46,10 @@ export class LoginPage {
         this._toast.present("CPF ou senha inválido !")
       }
     })
+   } catch(error){
+    console.log(error);
+    load.dismiss();
+   }
   }
   ResetSenha(){
     this._toast.present('Em Breve')
