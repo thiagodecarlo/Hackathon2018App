@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { FirebaseProvider } from '../../providers/firebase/firebase';
-import { MascaraProvider } from '../../providers/mascara/mascara';
-import { ToastProvider } from '../../providers/toast/toast';
-import { Storage } from '@ionic/storage';
-import { TabsPage } from '../tabs/tabs';
-
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  LoadingController,
+} from "ionic-angular";
+import { FirebaseProvider } from "../../providers/firebase/firebase";
+import { MascaraProvider } from "../../providers/mascara/mascara";
+import { ToastProvider } from "../../providers/toast/toast";
+import { Storage } from "@ionic/storage";
+import { TabsPage } from "../tabs/tabs";
 
 @IonicPage()
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: "page-login",
+  templateUrl: "login.html",
 })
 export class LoginPage {
-
-  backgrounds = ['assets/imgs/fundo.png']
-  cpf
-  senha
+  backgrounds = ["assets/imgs/fundo.png"];
+  cpf;
+  senha;
   constructor(
     public Storage: Storage,
     public navCtrl: NavController,
@@ -24,35 +27,34 @@ export class LoginPage {
     public _toast: ToastProvider,
     public _mascara: MascaraProvider,
     private _firebase: FirebaseProvider,
-    public navParams: NavParams) {
-  }
+    public navParams: NavParams
+  ) {}
   Logar() {
     let load = this.loadingCtrl.create({
-      content:"Buscado",
-      spinner:"ios"
+      content: "Buscado",
+      spinner: "ios",
     });
-   try{
-   
+
     load.present();
-    let cpfs=this.cpf.replace(".","").replace(".","").replace("-","")
-    this._firebase.login(cpfs, this.senha).subscribe(res => {
-      if (res && res.length > 0) {
-        this.Storage.set("usuario", res[0])
-        this.navCtrl.setRoot(TabsPage)
-        load.dismiss()
+    let cpfs = this.cpf.replace(".", "").replace(".", "").replace("-", "");
+    this._firebase.login(cpfs, this.senha).subscribe((res) => {
+      try {
+        if (res && res.length > 0) {
+          this.Storage.set("usuario", res[0]);
+          this.navCtrl.setRoot(TabsPage);
+          load.dismiss();
+        } else {
+          load.dismiss();
+          this._toast.present("CPF ou senha inválido !");
+        }
+      } catch (error) {
+        console.log(error);
+        load.dismiss();
       }
-      else{
-        load.dismiss()
-        this._toast.present("CPF ou senha inválido !")
-      }
-    })
-   } catch(error){
-    console.log(error);
-    load.dismiss();
-   }
+    });
   }
-  ResetSenha(){
-    this._toast.present('Em Breve')
+  ResetSenha() {
+    this._toast.present("Em Breve");
   }
   mascara(tipo) {
     switch (tipo) {
@@ -63,5 +65,4 @@ export class LoginPage {
         break;
     }
   }
-
 }

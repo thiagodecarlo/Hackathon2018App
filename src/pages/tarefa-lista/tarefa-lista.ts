@@ -44,7 +44,7 @@ export class TarefaListaPage {
             this.ordenacao(res)
           })
       load.dismiss()
-    })
+    }).catch(() => load.dismiss())
   }
   ordenacao(res) {
     this.listaTarefa = res.sort((a, b) => {
