@@ -48,8 +48,8 @@ export class TarefaListaPage {
   }
   ordenacao(res) {
     this.listaTarefa = res.sort((a, b) => {
-      var A = a.status.toLowerCase();
-      var B = b.status.toLowerCase();
+      var A = a.status;
+      var B = b.status;
       if (A < B) {
         return -1;
       } else if (A > B) {
@@ -72,7 +72,7 @@ export class TarefaListaPage {
     return tarefaFeita / total * 100
   }
   OpenDetalhes(item) {
-    switch (item.tipo) {
+    switch (String(item.tipo)) {
       case "4":
         this.navCtrl.push("TarefaDetalheCamareiraPage", item)
         break;
