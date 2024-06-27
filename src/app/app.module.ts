@@ -39,7 +39,8 @@ import { ToastProvider } from '../providers/toast/toast';
     databaseURL: "https://hackathonvarejo.firebaseio.com",
     projectId: "hackathonvarejo",
     storageBucket: "hackathonvarejo.appspot.com",
-    messagingSenderId: "793313377241"
+    messagingSenderId: "793313377241",
+    appId: "1:793313377241:web:0c180f3ffb4871b6c9f7c8"
   };
   firebase.initializeApp(config);
   firebase.firestore().settings( { timestampsInSnapshots: true })

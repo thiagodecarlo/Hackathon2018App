@@ -31,7 +31,7 @@ export class TabsPage {
   ionViewDidLoad() {
     this.storage.get("usuario").then(res => {
       this.usuario = res;
-      if (res.tipo == 4) {
+      if (res.tipo && res.tipo == 4) {
         this.tabs[1].ativo = false;
         this.tabs[3].ativo = false;
       }

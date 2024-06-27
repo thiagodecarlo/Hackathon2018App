@@ -31,8 +31,8 @@ export class TarefaListaPage {
     load.present()
     this.storage.get("usuario").then(res => {
       this.usuario = res;
-
-      if (res.tipo == 4) {
+      
+      if (res.tipo && res.tipo == 4) {
         this._firebase.getAllFilter('chamado', "tipo", "4")
           .subscribe((res: any) => {
             this.ordenacao(res)
@@ -44,12 +44,12 @@ export class TarefaListaPage {
             this.ordenacao(res)
           })
       load.dismiss()
-    })
+    }).catch(() => load.dismiss())
   }
   ordenacao(res) {
     this.listaTarefa = res.sort((a, b) => {
-      var A = a.status.toLowerCase();
-      var B = b.status.toLowerCase();
+      var A = a.status;
+      var B = b.status;
       if (A < B) {
         return -1;
       } else if (A > B) {
@@ -72,7 +72,7 @@ export class TarefaListaPage {
     return tarefaFeita / total * 100
   }
   OpenDetalhes(item) {
-    switch (item.tipo) {
+    switch (String(item.tipo)) {
       case "4":
         this.navCtrl.push("TarefaDetalheCamareiraPage", item)
         break;
